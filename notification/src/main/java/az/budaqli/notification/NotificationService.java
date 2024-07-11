@@ -15,10 +15,10 @@ public class NotificationService {
     public void send(NotificationRequest notificationRequest) {
         notificationRepository.save(
                 Notification.builder()
-                        .toCustomerId(notificationRequest.getToCustomerId())
-                        .toCustomerEmail(notificationRequest.getToCustomerName())
+                        .toCustomerId(notificationRequest.toCustomerId())
+                        .toCustomerEmail(notificationRequest.toCustomerName())
                         .sender("Budaqli")
-                        .message(notificationRequest.getMessage())
+                        .message(notificationRequest.message())
                         .sentAt(LocalDateTime.now())
                         .build()
         );

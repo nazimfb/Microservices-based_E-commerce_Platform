@@ -1,14 +1,18 @@
 package az.budaqli.customer;
 
+import az.budaqli.clients.fraud.FraudCheckResponse;
+import az.budaqli.clients.fraud.FraudClient;
+import az.budaqli.clients.notification.NotificationClient;
+import az.budaqli.clients.notification.NotificationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
+    private final FraudClient fraudClient;
+    private final NotificationClient notificationClient;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -19,15 +23,20 @@ public class CustomerService {
 
         customerRepository.saveAndFlush(customer);
 
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
+        FraudCheckResponse fraudCheckResponse =
+                fraudClient.isFraudster(customer.getId());
+
+        if (fraudCheckResponse.isFraudster()) {
+            throw new IllegalStateException("fraudster");
+        }
+
+        notificationClient.sendNotification(
+                new NotificationRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hi %s, welcome to Budaqli...",
+                                customer.getFirstName())
+                )
         );
-
-        if (fraudCheckResponse.isFraudster())
-            throw new IllegalStateException("Fraudster!");
-
-        customerRepository.save(customer);
     }
 }
