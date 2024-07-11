@@ -6,10 +6,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication
-@EnableEurekaClient
-@PropertySources({
-        @PropertySource("classpath:clients-${spring.profiles.active}.properties")
-})
+//@EnableEurekaClient
+//@PropertySources({
+//        @PropertySource("classpath:clients-${spring.profiles.active}.properties")
+//})
 public class NotificationApplication {
     public static void main(String[] args) {
         SpringApplication.run(NotificationApplication.class, args);
