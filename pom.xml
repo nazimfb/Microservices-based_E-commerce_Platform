@@ -11,19 +11,25 @@
 
   <name>Microservices-based_E-commerce_Platform</name>
   <url>https://github.com/nazimfb/Microservices-based_E-commerce_Platform.git</url>
+
   <modules>
     <module>customer</module>
     <module>fraud</module>
     <module>eureka-server</module>
+    <module>notification</module>
+    <module>apigw</module>
+    <module>clients</module>
+    <module>notification</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <spring.boot.maven.plugin.version>3.3.0</spring.boot.maven.plugin.version>
-    <spring.boot.dependencies.version>3.3.0</spring.boot.dependencies.version>
-    <spring-cloud.version>2023.0.2</spring-cloud.version>
+    <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
+    <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
+    <spring-cloud-sleuth.version>3.1.5</spring-cloud-sleuth.version>
+    <spring-cloud.version>2020.0.3</spring-cloud.version>
   </properties>
 
   <dependencyManagement>
@@ -35,10 +41,19 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
         <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-sleuth-dependencies</artifactId>
+        <version>${spring-cloud-sleuth.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -51,9 +66,15 @@
       <artifactId>lombok</artifactId>
       <version>1.18.30</version>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
   </dependencies>
 

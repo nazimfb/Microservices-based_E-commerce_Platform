@@ -1,6 +1,6 @@
 package az.budaqli.customer;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Getter

@@ -16,6 +16,9 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: 'true'
+  profiles:
+    active: default
+
 eureka:
   client:
     service-url:
